@@ -1,14 +1,17 @@
 #include <AutoItConstants.au3>
 #include <MsgBoxConstants.au3>
 
-$WindwosUser = @UserName
-$cmd = "net localgroup administrators " & $WindwosUser & " /add"
-$BatchPath = "C:\Users\"& $WindwosUser&"\Desktop\adduser.bat"
+$WindowsUser = @UserName
+$cmd = "net localgroup administrators " & $WindowsUser & " /add"
+$BatchPath = "C:\Users\"& $WindowsUser&"\Downloads\adduser.bat"
+
+; step1
 CreateBatch()
-;Example()
 
-MsgBox($MB_SYSTEMMODAL, "Title", $cmd , 10)
+;step2
+RunBatch()
 
+MsgBox(64, "Message", "You are granted with administrator privilege!" )
 
 Func CreateBatch()
 	  If FileExists ($BatchPath) Then
@@ -20,7 +23,7 @@ Func CreateBatch()
 EndFunc
 
 
-Func Example()
+Func RunBatch()
     ; Change the username and password to the appropriate values for your system.
     Local $sUserName = "labuser"
     Local $sPassword = "Sandbox@00"
@@ -30,7 +33,12 @@ Func Example()
     ; Wait 10 seconds for the Notepad window to appear.
     ;WinWait("[CLASS:Notepad]", "", 10)
     ; Wait for 2 seconds.
-    ;Sleep(1800000)
+    Sleep(3000)
     ; Close the Notepad process using the PID returned by RunAs.
-    ProcessClose($iPID)
+
+	  If FileExists ($BatchPath) Then
+			FileDelete ($BatchPath)
+		 EndIf
+
+ProcessClose($iPID)
 EndFunc   ;==>Example
